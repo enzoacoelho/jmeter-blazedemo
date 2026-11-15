@@ -1,10 +1,10 @@
-# 📚 Teste de Performance - BlazeDemo com Apache JMeter
+# 📚 Teste de Carga - BlazeDemo com Apache JMeter
 
 ## 🎯 Objetivo
 
-Projeto de estudo utilizando Apache JMeter para praticar testes de performance em aplicações web.
+Projeto de estudo desenvolvido com Apache JMeter para praticar testes de carga em aplicações web.
 
-O cenário simula múltiplos usuários executando o fluxo completo de compra de passagens da aplicação BlazeDemo, permitindo avaliar métricas como tempo de resposta, throughput, utilização de usuários virtuais e taxa de erros durante a execução.
+O cenário simula múltiplos usuários executando o fluxo completo de compra de passagens da aplicação BlazeDemo, permitindo coletar e analisar métricas de desempenho como throughput, tempo de resposta, percentis e taxa de erros.
 
 ---
 
@@ -13,6 +13,7 @@ O cenário simula múltiplos usuários executando o fluxo completo de compra de 
 - Apache JMeter 5.6.3
 - HTTP Request
 - CSV Data Set Config
+- Uniform Random Timer
 - Summary Report
 - HTML Dashboard Report
 
@@ -20,14 +21,12 @@ O cenário simula múltiplos usuários executando o fluxo completo de compra de 
 
 ## 📂 Fluxo Testado
 
-O cenário executa as seguintes etapas da aplicação:
+O teste simula o fluxo completo de compra de passagens:
 
-1. Acessar a página inicial
+1. Acessar página inicial
 2. Buscar voo
 3. Selecionar voo
 4. Finalizar compra
-
-Para tornar a execução mais próxima do uso real, foi utilizada parametrização através de arquivo CSV contendo diferentes origens e destinos.
 
 ---
 
@@ -41,7 +40,7 @@ Para tornar a execução mais próxima do uso real, foi utilizada parametrizaç�
 
 ### Massa de Dados
 
-Os dados utilizados durante a execução são carregados por meio de CSV Data Set Config.
+A execução utiliza dados parametrizados por meio de CSV Data Set Config.
 
 | Origem | Destino |
 |----------|----------|
@@ -53,7 +52,7 @@ Os dados utilizados durante a execução são carregados por meio de CSV Data Se
 
 ### Simulação de Usuário
 
-Foi utilizado Uniform Random Timer para inserir pausas entre as requisições e aproximar o comportamento de usuários reais.
+Foi utilizado Uniform Random Timer para aproximar o comportamento de usuários reais.
 
 - Espera mínima: 2 segundos
 - Espera aleatória adicional: até 3 segundos
@@ -66,34 +65,34 @@ Foi utilizado Uniform Random Timer para inserir pausas entre as requisições e 
 
 | Métrica | Resultado |
 |----------|----------|
-| Total de Requisições | 2.611 |
-| Tempo Médio de Resposta | 503 ms |
-| Tempo Mínimo | 385 ms |
-| Tempo Máximo | 1.825 ms |
+| Total de Requisições | 7.878 |
 | Taxa de Erro | 0,00% |
-| Throughput | 8,8 transações por segundo |
-
-## Análise dos Resultados
-
-O teste executou o fluxo completo da aplicação durante todo o período configurado sem ocorrência de falhas.
-
-A taxa de erro de 0% indica que todas as requisições foram processadas com sucesso durante o cenário de carga aplicado.
-
-O throughput manteve aproximadamente 8,8 transações por segundo ao longo da execução, demonstrando capacidade de processamento consistente para o volume de usuários simulados.
-
-O tempo médio de resposta foi de 503 ms, permanecendo abaixo de 1 segundo durante a maior parte da execução.
-
-Os gráficos indicam comportamento estável da aplicação durante o aumento gradual da carga, sem degradações significativas de desempenho.
+| Tempo Médio de Resposta | 345 ms |
+| Tempo Mínimo | 153 ms |
+| Tempo Máximo | 1.977 ms |
+| Mediana | 269 ms |
+| Percentil 90 (p90) | 501 ms |
+| Percentil 95 (p95) | 753 ms |
+| Percentil 99 (p99) | 1180 ms |
+| Throughput | 26,58 transações por segundo |
 
 ---
 
 ## 📈 Evidências
 
+### Statistics
+
+![Statistics](./reports/statistics.png)
+
+Resumo consolidado das métricas coletadas durante a execução do teste, incluindo throughput, percentis, tempo médio de resposta e taxa de erros.
+
+---
+
 ### Active Threads Over Time
 
 ![Active Threads](./reports/active-threads-over-time.png)
 
-O gráfico demonstra o crescimento gradual da carga até aproximadamente 50 usuários virtuais simultâneos, seguindo a configuração de ramp-up definida para o teste.
+O gráfico demonstra o crescimento gradual da carga até aproximadamente 50 usuários virtuais simultâneos, seguindo a configuração de ramp-up definida para o cenário.
 
 ---
 
@@ -101,15 +100,31 @@ O gráfico demonstra o crescimento gradual da carga até aproximadamente 50 usu�
 
 ![Transactions Per Second](./reports/transactions-per-second.png)
 
-Apresenta a quantidade de transações processadas por segundo ao longo da execução. O aumento do throughput acompanhou o crescimento do número de usuários ativos.
+Representa a quantidade de transações processadas por segundo scimento da quantidade de usuários ativos.
 
 ---
 
 ### Response Times Over Time
 
-![Response Times](./reports/response-times-over-time.png)
+./reports/response-times-over-time.png
 
-Mostra a evolução do tempo médio de resposta das requisições durante a execução do cenário. Apesar do aumento gradual Conceitos Praticados
+Mostra a evolução do tempo de resposta das requisições durante o teste. Apesar do aumento gradual da carga, os tempos permaneceram estáveis durante a execução.
+
+---
+
+## 🔍 Análise dos Resultados
+
+O cenário executou o fluxo completo da aplicação sem ocorrência de falhas, registrando taxa de erro de 0%.
+
+Foram processadas 7.878 requisições durante a execução, com throughput de aproximadamente 26,58 transações por segundo.
+
+O tempo médio de resposta foi de 345 ms, enquanto 95% das requisições foram respondidas em até 753 ms (p95).
+
+Os gráficos indicam comportamento estável da aplicação durante o aumento gradual da carga, sem degradação significativa de desempenho ou aumento expressivo da taxa de erros.
+
+---
+
+## ✅ Conceitos Praticados
 
 - Testes de carga utilizando Apache JMeter
 - Configuração de usuários virtuais (Threads)
@@ -118,6 +133,7 @@ Mostra a evolução do tempo médio de resposta das requisições durante a exec
 - Simulação de comportamento de usuários
 - Throughput
 - Tempo de resposta
+- Percentis (p90, p95 e p99)
 - Taxa de erros
 - Geração de dashboards e relatórios
 - Análise de métricas de performance
@@ -126,6 +142,6 @@ Mostra a evolução do tempo médio de resposta das requisições durante a exec
 
 ## 📌 Conclusão
 
-O cenário permitiu praticar a criação e execução de testes de carga em aplicações web utilizando Apache JMeter, além da coleta e interpretação de métricas de desempenho.
+Este projeto permitiu praticar a criação e execução de testes de carga utilizando Apache JMeter, além da interpretação de métricas e análise do comportamento da aplicação sob carga.
 
-A aplicação manteve estabilidade durante todo o período testado, processando mais de 2.600 requisições sem falhas e apresentando tempos de resposta consistentes sob a carga aplicada.
+Durante a execução do cenário configurado, a aplicação manteve estabilidade, baixa latência e ausência de erros, demonstrando capacidade de processamento consistente para o volume de usuários simulados.
