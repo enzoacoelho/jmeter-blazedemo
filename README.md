@@ -93,4 +93,39 @@ Os gráficos indicam comportamento estável da aplicação durante o aumento gra
 
 ![Active Threads](./reports/active-threads-over-time.png)
 
-O gráfico demonstra o crescimento gradual da carga até aproximadamente 50 usuários virtuais simultâneos, seguindo a configuração de ramp-up 
+O gráfico demonstra o crescimento gradual da carga até aproximadamente 50 usuários virtuais simultâneos, seguindo a configuração de ramp-up definida para o teste.
+
+---
+
+### Transactions Per Second
+
+![Transactions Per Second](./reports/transactions-per-second.png)
+
+Apresenta a quantidade de transações processadas por segundo ao longo da execução. O aumento do throughput acompanhou o crescimento do número de usuários ativos.
+
+---
+
+### Response Times Over Time
+
+![Response Times](./reports/response-times-over-time.png)
+
+Mostra a evolução do tempo médio de resposta das requisições durante a execução do cenário. Apesar do aumento gradual Conceitos Praticados
+
+- Testes de carga utilizando Apache JMeter
+- Configuração de usuários virtuais (Threads)
+- Ramp-Up e duração de testes
+- Parametrização de dados com CSV
+- Simulação de comportamento de usuários
+- Throughput
+- Tempo de resposta
+- Taxa de erros
+- Geração de dashboards e relatórios
+- Análise de métricas de performance
+
+---
+
+## 📌 Conclusão
+
+O cenário permitiu praticar a criação e execução de testes de carga em aplicações web utilizando Apache JMeter, além da coleta e interpretação de métricas de desempenho.
+
+A aplicação manteve estabilidade durante todo o período testado, processando mais de 2.600 requisições sem falhas e apresentando tempos de resposta consistentes sob a carga aplicada.
